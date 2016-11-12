@@ -1,7 +1,7 @@
 {
   "name": "pipe-validation-stream",
-  "version": "1.0.1",
-  "description": "Easily validate streamed data",
+  "version": "1.0.3",
+  "description": "Easily validate streamed data using pipe",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -18,9 +18,10 @@
     "transform",
     "transform stream",
     "pipe stream",
-    "pipe"
+    "pipe",
+    "pipe validation"
   ],
-  "author": "Roee Kasher",
+  "author": "Roee Kasher <roee91@gmail.com>",
   "licenses": [
     {
       "type": "MIT",
