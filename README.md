@@ -34,7 +34,7 @@ Filter all files that start with the text "validation" (in order to execute this
 
 ``` javascript
 
-let ValidationStream = require('validation-stream');
+let ValidationStream = require('pipe-validation-stream');
 let fs = require('fs');
 
 let listOfFiles = ['a.txt', 'b.mp4', 'c.sh'];
@@ -60,7 +60,7 @@ for (let i = 0; i < listOfFiles.length; ++i) {
 Now, lets get fancier: validate the true type of a file WHILE REQUESTING IT (i.e. - the file won't be saved on the computer unless the validation passes). We are validating that the requested file is really a mp4 file:
 
 ```javascript
-let ValidationStream = require('validation-stream');
+let ValidationStream = require('pipe-validation-stream');
 let fs = require('fs');
 let mmmagic = require('mmmagic');
 let Promise = require('bluebird');
