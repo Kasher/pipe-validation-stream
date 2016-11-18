@@ -51,7 +51,7 @@ ValidationStream.prototype.initializeMembers = function(requiredBytesCount, vali
 ValidationStream.prototype._transform = function(chunk, encoding, callback) {
     // If we have already validated everything - just process the chunk...
     if (this.validateState === VALIDATION_STATES.VALIDATION_COMPLETED && !this.validationFailed) {
-        this.push(chunk);
+        this.pushIfNotDisposed(chunk);
         callback();
         return;
     }
@@ -82,7 +82,7 @@ ValidationStream.prototype.validate = function() {
     }.bind(this)).then(function(validationResult) {
         var booleanValidationResult = Boolean(validationResult);
         if (booleanValidationResult) {
-            this.push(this.buffer);
+            this.pushIfNotDisposed(this.buffer);
         } else {
             this.validationFailed = true;
             this.emit(ValidationStream.prototype.VALIDATION_FAILED_EVENT);
@@ -99,6 +99,14 @@ ValidationStream.prototype.validate = function() {
             this.flushCallback = null;
         }
     }.bind(this));
+}
+
+ValidationStream.prototype.pushIfNotDisposed = function(chunk) {
+    if (this.disposed) {
+        return;
+    }
+
+    this.push(chunk);
 }
 
 ValidationStream.prototype._flush = function(callback) {
