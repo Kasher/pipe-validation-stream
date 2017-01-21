@@ -49,9 +49,19 @@ ValidationStream.prototype.initializeMembers = function(requiredBytesCount, vali
 }
 
 ValidationStream.prototype._transform = function(chunk, encoding, callback) {
+    // If the stream was already disposed - we shouldn't do anything.
+    if (this.disposed) {
+        callback();
+        return;
+    }
+
     // If we have already validated everything - just process the chunk...
-    if (this.validateState === VALIDATION_STATES.VALIDATION_COMPLETED && !this.validationFailed) {
-        this.pushIfNotDisposed(chunk);
+    if (this.validateState === VALIDATION_STATES.VALIDATION_COMPLETED)
+        // If the validation completed and didn't fail, we'll push the chunk.
+        if (!this.validationFailed) {
+            this.pushIfNotDisposed(chunk);
+        }
+
         callback();
         return;
     }
